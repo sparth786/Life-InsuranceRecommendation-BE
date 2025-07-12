@@ -1,98 +1,366 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Life Insurance Recommendation API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A robust NestJS-based REST API for generating personalized life insurance recommendations with comprehensive logging, monitoring, and security features.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Features
 
-## Description
+- **Authentication & Authorization**: JWT-based authentication with Passport.js
+- **Database**: PostgreSQL with Prisma ORM
+- **Logging**: Winston-based logging with file rotation
+- **Monitoring**: Health checks, metrics, and performance monitoring
+- **Security**: Helmet, rate limiting, CORS protection
+- **Documentation**: Swagger/OpenAPI documentation
+- **Docker**: Multi-stage Docker builds with security best practices
+- **Testing**: Jest-based unit and e2e tests
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📋 Prerequisites
 
-## Project setup
+- Node.js 18+ 
+- Yarn package manager
+- PostgreSQL 15+
+- Docker & Docker Compose (for containerized deployment)
+
+## 🛠️ Local Development Setup
+
+### 1. Clone and Install Dependencies
 
 ```bash
-$ yarn install
+git clone <repository-url>
+cd life_insurance_be
+yarn install
 ```
 
-## Compile and run the project
+### 2. Environment Configuration
 
 ```bash
-# development
-$ yarn run start
+# Copy environment template
+cp .env.example .env
 
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+# Edit the .env file with your configuration
+nano .env
 ```
 
-## Run tests
+**Required Environment Variables:**
+
+```env
+# Application Configuration
+NODE_ENV=development
+PORT=3001
+
+# Database Configuration
+DATABASE_URL="postgresql://postgres:password@localhost:5432/life_insurance"
+
+# JWT Configuration
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+
+# Logging Configuration
+LOG_LEVEL=info
+
+# CORS Configuration
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
+```
+
+### 3. Database Setup
 
 ```bash
-# unit tests
-$ yarn run test
+# Generate Prisma client
+yarn prisma:generate
 
-# e2e tests
-$ yarn run test:e2e
+# Run database migrations
+yarn prisma:migrate
 
-# test coverage
-$ yarn run test:cov
+# (Optional) Open Prisma Studio for database management
+yarn prisma:studio
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 4. Start Development Server
 
 ```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+# Development mode with hot reload
+yarn start:dev
+
+# Production mode
+yarn start:prod
+
+# Debug mode
+yarn start:debug
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+The API will be available at `http://localhost:3001`
 
-## Resources
+## 🐳 Docker Deployment
 
-Check out a few resources that may come in handy when working with NestJS:
+### Quick Start with Docker Compose
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+# Start all services (app, database, redis)
+yarn docker:compose
 
-## Support
+# Stop all services
+yarn docker:compose:down
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# View logs
+docker-compose logs -f app
+```
 
-## Stay in touch
+### Manual Docker Build
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+# Build the Docker image
+yarn docker:build
 
-## License
+# Run the container
+yarn docker:run
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Docker Compose Services
+
+- **app**: NestJS application (port 3001)
+- **db**: PostgreSQL database (port 5432)
+- **redis**: Redis cache (port 6379)
+
+## 📊 Monitoring & Health Checks
+
+### Health Check Endpoints
+
+- **Health Check**: `GET /monitoring/health`
+- **Readiness Probe**: `GET /monitoring/ready`
+- **Metrics**: `GET /monitoring/metrics`
+
+### Example Health Check Response
+
+```json
+{
+  "status": "healthy",
+  "timestamp": "2024-01-15T10:30:00.000Z",
+  "uptime": {
+    "value": 3600000,
+    "formatted": "1h 0m 0s"
+  },
+  "memory": {
+    "used": 52428800,
+    "total": 1073741824,
+    "percentage": 4.88
+  },
+  "requests": {
+    "total": 150,
+    "successRate": 98.67
+  }
+}
+```
+
+## 🔒 Security Features
+
+### Rate Limiting
+- **Per-minute limit**: 100 requests
+- **Per-hour limit**: 1000 requests
+- Configurable via environment variables
+
+### Security Headers
+- Helmet.js for security headers
+- CORS protection with configurable origins
+- Request validation and sanitization
+
+### Authentication
+- JWT-based authentication
+- Password hashing with bcrypt
+- Configurable token expiration
+
+## 📝 API Documentation
+
+### Swagger UI
+Access the interactive API documentation at:
+```
+http://localhost:3001/api
+```
+
+### Available Endpoints
+
+#### Authentication
+- `POST /auth/register` - User registration
+- `POST /auth/login` - User login
+- `GET /auth/profile` - Get user profile (protected)
+
+#### Recommendations
+- `POST /recommendations` - Generate insurance recommendations (protected)
+- `GET /recommendations/history` - Get recommendation history (protected)
+
+#### Monitoring
+- `GET /monitoring/health` - Health check
+- `GET /monitoring/metrics` - Application metrics
+- `GET /monitoring/ready` - Readiness probe
+
+## 📈 Logging
+
+### Log Levels
+- `error`: Application errors
+- `warn`: Warning messages
+- `info`: General information
+- `debug`: Debug information
+- `verbose`: Verbose logging
+
+### Log Files
+- **Application logs**: `logs/application-YYYY-MM-DD.log`
+- **Error logs**: `logs/error-YYYY-MM-DD.log`
+- **Log rotation**: Daily with 14-day retention
+- **Compression**: Automatic gzip compression
+
+### Log Format
+```json
+{
+  "level": "info",
+  "message": "Incoming GET request to /monitoring/health from 127.0.0.1",
+  "timestamp": "2024-01-15T10:30:00.000Z",
+  "context": "RequestLogger",
+  "service": "life-insurance-api"
+}
+```
+
+## 🧪 Testing
+
+```bash
+# Unit tests
+yarn test
+
+# Unit tests with coverage
+yarn test:cov
+
+# E2E tests
+yarn test:e2e
+
+# Test in watch mode
+yarn test:watch
+```
+
+## 🚀 Production Deployment
+
+### Environment Variables for Production
+
+```env
+NODE_ENV=production
+PORT=3001
+DATABASE_URL=postgresql://user:password@host:5432/database
+JWT_SECRET=your-very-long-and-secure-jwt-secret
+LOG_LEVEL=warn
+ALLOWED_ORIGINS=https://yourdomain.com,https://api.yourdomain.com
+```
+
+### Docker Production Deployment
+
+```bash
+# Build production image
+docker build -t life-insurance-be:latest .
+
+# Run with production environment
+docker run -d \
+  --name life-insurance-api \
+  -p 3001:3001 \
+  --env-file .env.production \
+  -v /path/to/logs:/app/logs \
+  life-insurance-be:latest
+```
+
+### Kubernetes Deployment
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: life-insurance-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: life-insurance-api
+  template:
+    metadata:
+      labels:
+        app: life-insurance-api
+    spec:
+      containers:
+      - name: api
+        image: life-insurance-be:latest
+        ports:
+        - containerPort: 3001
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: url
+        livenessProbe:
+          httpGet:
+            path: /monitoring/health
+            port: 3001
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /monitoring/ready
+            port: 3001
+          initialDelaySeconds: 5
+          periodSeconds: 5
+```
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+1. **Database Connection Error**
+   ```bash
+   # Check if PostgreSQL is running
+   sudo systemctl status postgresql
+   
+   # Verify connection string
+   psql "postgresql://postgres:password@localhost:5432/life_insurance"
+   ```
+
+2. **Port Already in Use**
+   ```bash
+   # Find process using port 3001
+   lsof -i :3001
+   
+   # Kill the process
+   kill -9 <PID>
+   ```
+
+3. **Permission Denied for Logs**
+   ```bash
+   # Create logs directory with proper permissions
+   mkdir -p logs && chmod 755 logs
+   ```
+
+### Log Analysis
+
+```bash
+# View recent application logs
+tail -f logs/application-$(date +%Y-%m-%d).log
+
+# View error logs
+tail -f logs/error-$(date +%Y-%m-%d).log
+
+# Search for specific errors
+grep "ERROR" logs/error-*.log
+```
+
+## 📚 Additional Resources
+
+- [NestJS Documentation](https://docs.nestjs.com/)
+- [Prisma Documentation](https://www.prisma.io/docs/)
+- [Docker Documentation](https://docs.docker.com/)
+- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new functionality
+5. Ensure all tests pass
+6. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
