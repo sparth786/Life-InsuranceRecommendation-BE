@@ -1,5 +1,5 @@
 # Multi-stage build for better security and smaller image size
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -20,7 +20,7 @@ RUN npx prisma generate
 RUN yarn build
 
 # Production stage
-FROM node:18-alpine AS production
+FROM node:20-alpine AS production
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs
