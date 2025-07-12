@@ -11,6 +11,7 @@ export class RecommendationService {
 
   async generateRecommendation(
     userData: UserSubmissionDto,
+    userId?: string,
   ): Promise<RecommendationResponseDto> {
     const { age, income, dependents, riskTolerance } = userData;
 
@@ -48,6 +49,7 @@ export class RecommendationService {
         riskTolerance,
         recommendation,
         explanation,
+        userId,
       },
     });
 
@@ -147,6 +149,13 @@ export class RecommendationService {
 
   async getAllSubmissions() {
     return this.prisma.userSubmission.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async getUserSubmissions(userId: string) {
+    return this.prisma.userSubmission.findMany({
+      where: { userId },
       orderBy: { createdAt: 'desc' },
     });
   }
