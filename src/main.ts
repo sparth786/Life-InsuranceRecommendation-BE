@@ -22,6 +22,7 @@ async function bootstrap() {
   // Enable CORS with specific configuration
   app.enableCors({
     origin: process.env.ALLOWED_ORIGINS?.split(',') || [
+      'https://life-insurance-recommendation-fe.vercel.app',
       'http://localhost:3000',
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
